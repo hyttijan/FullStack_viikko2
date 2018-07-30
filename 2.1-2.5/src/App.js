@@ -1,6 +1,5 @@
 import React from 'react';
 import Kurssi from './kurssi';
-import './App.css';
 
 const App = () => {
   const kurssit = [

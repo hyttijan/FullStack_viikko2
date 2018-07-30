@@ -14,16 +14,17 @@ class App extends Component {
   handleSearch = (event)=>{
     this.setState({searchWord:event.target.value});
   }
-
+  handleDetails = (event)=>{
+    this.setState({searchWord:event.target.innerHTML});
+  }
   render() {
     
-
     return (
       <div>
         <form>
           find countries:<input onChange={this.handleSearch} type="text"/>
         </form>
-        <CountryList countries={this.state.countries} searchWord={this.state.searchWord}/>
+        <CountryList handleDetails={this.handleDetails} countries={this.state.countries} searchWord={this.state.searchWord}/>
       </div>
     );
   }
@@ -34,20 +35,21 @@ const CountryList = (props)=>{
       return (<p>too many matches, specify another filter</p>)
     }
     else if(filteredCountries.length==1){
-      let country = filteredCountries.map((country)=>{
-                                                      <div>
+      let country = filteredCountries.map((country)=>{return(
+                                                      <div key={country.name}>
                                                         <h1>{country.name} {country.nativeName}</h1>
                                                         <h2>capital {country.capital}</h2>
                                                         <h2>population {country.population}</h2>
-                                                        <img src={country.flag}/>
-                                                      </div>})
+                                                        <img width="25%" height="25%" src={country.flag}/>
+                                                      </div>)})
       return(<div>{country}</div>)
     }
     else{
       let countries = filteredCountries.map((country)=>{
-                                                      <div>
+                                                      return(
+                                                      <div onClick={props.handleDetails} key={country.name}>
                                                         <h1>{country.name}</h1>
-                                                      </div>})
+                                                      </div>)})
       return(<div>{countries}</div>)
     }
 
